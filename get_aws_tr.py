@@ -40,6 +40,7 @@ def start_transcription_job(job_name, media_uri, language_code, transcribe_clien
     except ClientError as e:
         print(e)
         print("Couldn't start transcription job %s.", job_name)
+        return "ERROR"
     else:
         return job
 
@@ -54,6 +55,7 @@ def get_transcription_job(job_name, transcribe_client):
     except ClientError as e:
         print(e)
         print("Couldn't get job %s.", job_name)
+        return "ERROR"
     else:
         return job
 
@@ -80,9 +82,13 @@ def get_transcription_aws(audio_file_path, language):
                                         region_name = "ap-southeast-2")
     st = time.time()
     job_sent = start_transcription_job(job_name, file_uri, language, transcription_client)
+    if (job_sent == "ERROR"):
+        return "ERROR", 0.00
 
     while True:
         job_received = get_transcription_job(job_name, transcription_client)
+        if (job_received == "ERROR"):
+            return "ERROR", 0.00
         
         if (job_received["TranscriptionJobStatus"] == "COMPLETED"):
             et = time.time()
@@ -92,7 +98,7 @@ def get_transcription_aws(audio_file_path, language):
             continue
         elif (job_received["TranscriptionJobStatus"] == "FAILED"):
             print("job" + job_name + "failed!")
-            return {"status": "FAIL"}, 0
+            return "ERROR", 0.00
 
 
 # def main():

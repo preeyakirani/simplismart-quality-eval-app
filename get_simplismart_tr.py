@@ -52,6 +52,7 @@ def get_transcription_simplismart(audio_file_path,
     
     except Exception as e:
         print(f"Exception: {e}")
+        return "ERROR", 0.00
     
 
 

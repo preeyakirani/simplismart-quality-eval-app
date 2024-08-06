@@ -24,6 +24,7 @@ def get_transcription_assemblyai(audio_file_path, language):
         return transcript, round((et-st),2)
     except Exception as e:
         print(f"Exception: {e}")
+        return "ERROR", 0.00
 
 
 def main():

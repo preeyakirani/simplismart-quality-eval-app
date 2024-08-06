@@ -85,6 +85,7 @@ def get_transcription_rev_ai(audio_file_path, task, language):
 
     except Exception as e:
         print(f"Exception: {e}")
+        return "ERROR", None, 0.00
 
 
 # def main():

@@ -36,6 +36,7 @@ def get_transcription_whisper(audio_file_path, task, language):
     
     except Exception as e:
         print(f"Exception: {e}")
+        return "ERROR", 0.00
 
 
 # def main():
